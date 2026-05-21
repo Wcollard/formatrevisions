@@ -1,0 +1,59 @@
+Sub FormatRevisions()
+    Dim doc As Word.Document
+    Dim rev As Word.Revision
+   
+    Set doc = ActiveDocument
+    doc.TrackRevisions = False
+    For Each rev In doc.Revisions
+        Select Case rev.Type
+            Case wdRevisionDelete
+                rev.Range.Font.StrikeThrough = True
+                rev.Reject
+            Case wdRevisionInsert
+                rev.Range.Underline = wdUnderlineSingle
+                rev.Accept
+            Case wdRevisionFormat
+                 MsgBox "revision format"
+                rev.Accept
+            Case wdRevisionStyle
+                 MsgBox "revision style"
+                rev.Accept
+            Case wdRevisionStyleDefinition
+                 MsgBox "revision style def"
+                rev.Accept
+            Case wdRevisionSectionProperty
+                 MsgBox "revision section prop"
+                rev.Accept
+            Case wdRevisionReplace
+                 MsgBox "revision replace"
+                rev.Accept
+            Case wdRevisionTableProperty
+                 MsgBox "revision table property"
+                rev.Accept
+            Case wdRevisionReconcile
+                 MsgBox "revision reconcile"
+                rev.Accept
+            Case wdRevisionProperty
+                 MsgBox "revision property"
+                rev.Accept
+            Case wdRevisionParagraphProperty
+                 MsgBox "revision para property"
+                rev.Accept
+            Case wdRevisionParagraphNumber
+                 MsgBox "revision para number"
+                rev.Accept
+            Case wdRevisionDisplayField
+                 MsgBox "revision display field"
+                rev.Accept
+            Case wdRevisionConflict
+                MsgBox "revision conflict"
+                rev.Accept
+            Case wdNoRevision
+                MsgBox "no revision"
+                rev.Accept
+            Case Else
+                MsgBox "unknown type"
+                doc.Comments.Add rev.Range, "unknown type"
+        End Select
+    Next
+End Sub
